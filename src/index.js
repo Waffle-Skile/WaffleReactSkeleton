@@ -1,10 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import SearchUser from './SearchUser'
 import HobulhoAppContainer from './HobulhoAppContainer';
 import * as serviceWorker from './serviceWorker';
+import { Route, Switch, BrowserRouter } from 'react-router-dom'
 
-ReactDOM.render(<HobulhoAppContainer />, document.getElementById('root'));
+class App extends React.Component {
+  render() {
+    return (
+      <div className="app-container jumbotron container">
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" component={SearchUser} />
+            <Route path="/:name" component={HobulhoAppContainer} />
+          </Switch>
+        </BrowserRouter>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

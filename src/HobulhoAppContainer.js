@@ -5,34 +5,28 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      author: "Jeongmin Lee",
-      questions: [
-        {
-          subject: "메밀소바",
-          choice: "dislike"
-        },
-        {
-          subject: "데자와",
-          choice: "like"
-        },
-        {
-          subject: "녹차 아이스크림",
-          choice: "like"
-        },
-        {
-          subject: "회",
-          choice: "dislike"
-        },
-        {
-          subject: "콩국수",
-          choice: "dislike"
-        },
-        {
-          subject: "돼지 간",
-          choice: "like"
-        }
-      ]
+      author: props.match.params.name,
+      questions: [],
     };
+  }
+
+  componentDidMount() {
+    let username = this.state.author;
+    if (username) {
+      fetch(`http://127.0.0.1:8000/hobulho/${username}/`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+        this.setState({
+          questions: data,
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
   }
 
   render() {
